@@ -1,18 +1,18 @@
 <template>
   <div>
     <img alt="Vue logo" src="./assets/logo.png" />
-    <BeersList />
+    <IndexPage />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import BeersList from "./components/BeersList.vue";
+import IndexPage from "./components/IndexPage.vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    BeersList,
+    IndexPage,
   },
 });
 </script>

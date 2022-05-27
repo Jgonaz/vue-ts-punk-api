@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <h1>Prueba, listado de cervezas.</h1>
+  </div>
 </template>
 
 <script lang="ts">
