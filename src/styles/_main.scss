@@ -1,22 +1,27 @@
+@import "./variables";
+@import "./modal";
+
 body {
   margin: 0;
 
   #app {
     nav.navbar {
-      background-color: gray;
-      margin: 1rem auto;
+      background-color: $dark-blue;
+
+      ul {
+        margin: 0;
+        list-style-type: none;
+      }
     }
 
     .container {
       max-width: 1140px;
       margin: 0 auto;
 
-      .list{
-        .search{
-
+      .list {
+        .search {
         }
-        .grid{
-            
+        .grid {
         }
       }
     }

@@ -1,0 +1,20 @@
+.vue-universal-modal {
+  background-color: rgb(0 0 0 / 70%);
+
+  &-content {
+    .modal {
+      width: 300px;
+      padding: 30px;
+      box-sizing: border-box;
+      background-color: #fff;
+      font-size: 20px;
+      text-align: center;
+      border-radius: 0.5rem;
+      box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.35);
+
+      // Modal de detalle de cada cerveza.
+      &-details {
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+$dark-blue: #004e64;
+$blue: #00a5cf;
+$aquamarine: #9fffcb;
+$dark-green: #25a18e;
+$green: #7ae582;
+
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto"),
+    url("@/assets/fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+* {
+  font-family: Roboto, Helvetica, Arial;
+}
