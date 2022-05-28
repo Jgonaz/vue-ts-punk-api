@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+
+  #app {
+    nav.navbar {
+      background-color: gray;
+      margin: 1rem auto;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+
+      .list{
+        .search{
+
+        }
+        .grid{
+            
+        }
+      }
+    }
+  }
+}

@@ -1,16 +1,16 @@
 <template>
-  <div id="app">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <router-link to="/index" class="navbar-brand">Inicio</router-link>
-      <div class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link to="/beers" class="nav-link">Cervezas</router-link>
-        </li>
-      </div>
-    </nav>
-    <div class="container mt-3">
-      <router-view />
-    </div>
+  <nav class="navbar">
+    <ul>
+      <li>
+        <router-link to="/index" class="navbar-brand">Inicio</router-link>
+      </li>
+      <li>
+        <router-link to="/beers" class="nav-link">Listado</router-link>
+      </li>
+    </ul>
+  </nav>
+  <div class="container">
+    <router-view />
   </div>
 </template>
 
@@ -21,3 +21,7 @@ export default defineComponent({
   name: "App",
 });
 </script>
+
+<style lang="scss">
+@import "@/styles/main";
+</style>

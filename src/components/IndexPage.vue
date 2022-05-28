@@ -1,6 +1,11 @@
 <template>
   <div>
-    <h1>Prueba, página de bienvenida.</h1>
+    <h1>Bienvenido/a</h1>
+    <span>
+      Esto es una prueba de enrutamiento. Pulsa
+      <router-link to="/beers">aquí</router-link> para acceder al listado de
+      cervezas.
+    </span>
   </div>
 </template>
 
@@ -11,5 +16,3 @@ export default defineComponent({
   name: "IndexPage",
 });
 </script>
-
-<style scoped></style>
