@@ -1,22 +1,8 @@
-$dark-blue: #004e64;
-$blue: #00a5cf;
 $aquamarine: #9fffcb;
-$dark-green: #25a18e;
+$blue: #00a5cf;
 $green: #7ae582;
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-span {
-  color: #2e2e2e;
-}
-
-span {
-  font-size: 14px;
-}
+$dark-blue: #004e64;
+$dark-green: #25a18e;
 
 @font-face {
   font-family: "Montserrat";
@@ -25,5 +11,10 @@ span {
 }
 
 * {
+  color: #2e2e2e;
   font-family: Montserrat, Helvetica, Arial;
+}
+
+span {
+  font-size: 14px;
 }

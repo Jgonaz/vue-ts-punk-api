@@ -1,18 +1,19 @@
 <template>
   <div class="list">
     <div class="list_header">
-      <h3>Listado de cervezas</h3>
+      <h3 class="list_header-title">Listado de cervezas</h3>
       <div class="list_header-search">
         <input
           v-model="filter"
           placeholder="Filtrar por nombre"
-          @input="getBeersByName()"
+          @input="getBeersByName(true)"
           type="text"
         />
       </div>
     </div>
     <hr />
-    <div class="list_grid" v-if="beers.length">
+    <div class="list_grid" v-if="!errMsg">
+      <!-- Cabecera tabla -->
       <div class="list_grid-header">
         <span>Nombre</span>
         <span>Eslogan</span>
@@ -20,6 +21,7 @@
         <span>Volumen</span>
         <span></span>
       </div>
+      <!-- Resultados -->
       <div
         v-for="(beer, index) in beers"
         v-bind:key="index"
@@ -30,11 +32,33 @@
         <span>{{ beer.tagline }}</span>
         <span>{{ beer.first_brewed }}</span>
         <span>{{ beer.abv }}%</span>
-        <span @click="beerDetails(beer.id)">Ver detalles</span>
+        <span @click="beerDetails(beer.id)">
+          <i class="eye-icon" />
+          Ver detalles</span
+        >
+      </div>
+      <div v-if="!beers.length" class="list_grid-no_results">
+        <span>No hay más resultados con los criterios de búsqueda.</span>
+      </div>
+      <!-- Paginación -->
+      <div class="list_grid-pagination">
+        <a
+          href="javascript:void(0)"
+          v-bind:class="{ hidden: active_page === 1 }"
+          @click="goToPage(false)"
+          >&lt; Página anterior</a
+        >
+        <span class="">{{ active_page }}</span>
+        <a
+          href="javascript:void(0)"
+          v-bind:class="{ hidden: beers.length === 0 || limit_reached }"
+          @click="goToPage(true)"
+          >Página siguiente &gt;</a
+        >
       </div>
     </div>
-    <div class="list_no-results" v-else>
-      <span> {{ errMsg || "No se han encontrado resultados." }} </span>
+    <div class="list_error-msg" v-if="errMsg">
+      <span> {{ errMsg }} </span>
     </div>
 
     <VueModal v-model="showModal" :close="closeModal">
@@ -64,6 +88,9 @@ export default defineComponent({
       filter: "" as string, // Filtro por nombre
       errMsg: "" as string, // Mensaje de error
       showModal: false as boolean, // Mostrar/ocultar modal
+      active_page: 1, // Página actual
+      per_page: 5, // Número de registros por página (máximo 80)
+      limit_reached: false, // Si no hay más resultados, ocultamos el botón de "Página siguiente".
     };
   },
   methods: {
@@ -71,36 +98,37 @@ export default defineComponent({
     getBeers() {
       this.errMsg = "";
 
-      BeersDataService.getAll()
+      BeersDataService.getAll(this.active_page, this.per_page)
         .then((response) => {
           console.log({ response });
-          this.beers = [];
-          if (response?.data) this.beers = response.data;
-          else this.errMsg = "Error al intentar obtener los datos.";
+
+          if (response?.data) {
+            this.beers = response.data;
+          } else this.handleError();
         })
         .catch((err) => {
-          console.error(err);
-          this.beers = [];
-          this.errMsg = "Error al intentar obtener los datos.";
+          this.handleError(err);
         });
     },
     // Obtiene listado de cervezas filtrado por nombre.
-    getBeersByName() {
+    getBeersByName(input: boolean) {
       this.errMsg = "";
+
+      // Si viene de modificar el cuadro de búsqueda, reiniciaremos la paginación.
+      if (input) this.active_page = 1;
 
       if (!this.filter) this.getBeers();
       else
-        BeersDataService.getByName(this.filter)
+        BeersDataService.getByName(this.filter, this.active_page, this.per_page)
           .then((response) => {
             console.log({ response });
-            this.beers = [];
-            if (response?.data) this.beers = response.data;
-            else this.errMsg = "Error al intentar obtener los datos.";
+
+            if (response?.data) {
+              this.beers = response.data;
+            } else this.handleError();
           })
           .catch((err) => {
-            console.error(err);
-            this.beers = [];
-            this.errMsg = "Error al intentar obtener los datos.";
+            this.handleError(err);
           });
     },
     // Muestra la modal con los detalles de la cerveza seleccionada.
@@ -108,9 +136,23 @@ export default defineComponent({
       this.showModal = true;
       this.itemSelected = this.beers.filter((beer) => beer.id === id)[0];
     },
+    // Cambia de página en el listado.
+    goToPage(next: boolean) {
+      if (next) this.active_page++;
+      else this.active_page--;
+
+      if (!this.filter) this.getBeers();
+      else this.getBeersByName(false);
+    },
     // Oculta la modal.
     closeModal() {
       this.showModal = false;
+    },
+    // Cuando ocurre algún error al intentar obtener los datos.
+    handleError(error = "Error al intentar obtener los datos.") {
+      console.error(error);
+      this.beers = [];
+      this.errMsg = "Error al intentar obtener los datos.";
     },
   },
   mounted() {
