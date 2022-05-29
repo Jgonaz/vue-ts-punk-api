@@ -1,44 +1,42 @@
 <template>
   <div class="list">
-    <div>
+    <div class="list_header">
       <h3>Listado de cervezas</h3>
+      <div class="list_header-search">
+        <input
+          v-model="filter"
+          placeholder="Filtrar por nombre"
+          @input="getBeersByName()"
+          type="text"
+        />
+      </div>
     </div>
-    <div class="search">
-      <input type="text" v-model="filter" />
-    </div>
-    <div v-if="errMsg" class="error-msg">
-      <span> {{ errMsg }} </span>
-    </div>
-    <div v-else>
-      <div class="grid grid-header">
-        <span class="grid-item">Nombre</span>
-        <span class="grid-item">Eslogan</span>
-        <span class="grid-item">Fecha de elaboración</span>
-        <span class="grid-item">Volumen</span> <span class="grid-item"></span>
+    <hr />
+    <div class="list_grid" v-if="beers.length">
+      <div class="list_grid-header">
+        <span>Nombre</span>
+        <span>Eslogan</span>
+        <span>Fecha</span>
+        <span>Volumen</span>
+        <span></span>
       </div>
       <div
         v-for="(beer, index) in beers"
         v-bind:key="index"
-        class="grid grid-body"
+        class="list_grid-row"
         :id="'beer_' + beer.id"
       >
-        <span class="grid-item">
-          {{ beer.name }}
-        </span>
-        <span class="grid-item">
-          {{ beer.tagline }}
-        </span>
-        <span class="grid-item">
-          {{ beer.first_brewed }}
-        </span>
-        <span class="grid-item">
-          {{ beer.abv }}
-        </span>
-        <span class="grid-item grid-item-details" @click="beerDetails(beer.id)">
-          Ver detalles
-        </span>
+        <span>{{ beer.name }}</span>
+        <span>{{ beer.tagline }}</span>
+        <span>{{ beer.first_brewed }}</span>
+        <span>{{ beer.abv }}%</span>
+        <span @click="beerDetails(beer.id)">Ver detalles</span>
       </div>
     </div>
+    <div class="list_no-results" v-else>
+      <span> {{ errMsg || "No se han encontrado resultados." }} </span>
+    </div>
+
     <VueModal v-model="showModal" :close="closeModal">
       <div class="modal modal-details">
         <BeerDetails v-if="itemSelected" :beer="itemSelected"></BeerDetails>
@@ -72,17 +70,38 @@ export default defineComponent({
     // Obtiene el listado de cervezas.
     getBeers() {
       this.errMsg = "";
-      this.beers = [];
 
       BeersDataService.getAll()
         .then((response) => {
+          console.log({ response });
+          this.beers = [];
           if (response?.data) this.beers = response.data;
           else this.errMsg = "Error al intentar obtener los datos.";
         })
         .catch((err) => {
           console.error(err);
+          this.beers = [];
           this.errMsg = "Error al intentar obtener los datos.";
         });
+    },
+    // Obtiene listado de cervezas filtrado por nombre.
+    getBeersByName() {
+      this.errMsg = "";
+
+      if (!this.filter) this.getBeers();
+      else
+        BeersDataService.getByName(this.filter)
+          .then((response) => {
+            console.log({ response });
+            this.beers = [];
+            if (response?.data) this.beers = response.data;
+            else this.errMsg = "Error al intentar obtener los datos.";
+          })
+          .catch((err) => {
+            console.error(err);
+            this.beers = [];
+            this.errMsg = "Error al intentar obtener los datos.";
+          });
     },
     // Muestra la modal con los detalles de la cerveza seleccionada.
     beerDetails(id: number) {

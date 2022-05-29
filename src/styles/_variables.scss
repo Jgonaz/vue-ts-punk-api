@@ -15,15 +15,15 @@ span {
 }
 
 span {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 @font-face {
-  font-family: "Roboto";
-  src: local("Roboto"),
-    url("@/assets/fonts/Roboto-Regular.ttf") format("truetype");
+  font-family: "Montserrat";
+  src: local("Montserrat"),
+    url("@/assets/fonts/Montserrat-Regular.ttf") format("truetype");
 }
 
 * {
-  font-family: Roboto, Helvetica, Arial;
+  font-family: Montserrat, Helvetica, Arial;
 }
