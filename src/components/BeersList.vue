@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="list">
     <div>
-      <h1>Listado de cervezas.</h1>
+      <h3>Listado de cervezas</h3>
     </div>
     <div class="search">
       <input type="text" v-model="filter" />
@@ -9,24 +9,39 @@
     <div v-if="errMsg" class="error-msg">
       <span> {{ errMsg }} </span>
     </div>
-    <div v-else class="grid">
-      <div v-for="(beer, index) in beers" v-bind:key="index">
-        <div class="grid-item" :id="'beer_' + beer.id">
-          <h3 class="grid-item_title" @click="beerDetails(beer.id)">
-            {{ beer.name }}
-          </h3>
-        </div>
+    <div v-else>
+      <div class="grid grid-header">
+        <span class="grid-item">Nombre</span>
+        <span class="grid-item">Eslogan</span>
+        <span class="grid-item">Fecha de elaboración</span>
+        <span class="grid-item">Volumen</span> <span class="grid-item"></span>
+      </div>
+      <div
+        v-for="(beer, index) in beers"
+        v-bind:key="index"
+        class="grid grid-body"
+        :id="'beer_' + beer.id"
+      >
+        <span class="grid-item">
+          {{ beer.name }}
+        </span>
+        <span class="grid-item">
+          {{ beer.tagline }}
+        </span>
+        <span class="grid-item">
+          {{ beer.first_brewed }}
+        </span>
+        <span class="grid-item">
+          {{ beer.abv }}
+        </span>
+        <span class="grid-item grid-item-details" @click="beerDetails(beer.id)">
+          Ver detalles
+        </span>
       </div>
     </div>
     <VueModal v-model="showModal" :close="closeModal">
       <div class="modal modal-details">
-        <img
-          src="@/assets/images/beer_logo.png"
-          width="64"
-          height="64"
-          alt="beer_logo"
-        />
-        <h3>{{ itemSelected.name }}</h3>
+        <BeerDetails v-if="itemSelected" :beer="itemSelected"></BeerDetails>
         <button @click="closeModal">Cerrar</button>
       </div>
     </VueModal>
@@ -37,9 +52,13 @@
 import { defineComponent } from "vue";
 import Beer from "@/types/Beer";
 import BeersDataService from "@/services/BeersDataService";
+import BeerDetails from "@/components/BeerDetails.vue";
 
 export default defineComponent({
   name: "BeersList",
+  components: {
+    BeerDetails,
+  },
   data() {
     return {
       beers: [] as Beer[], // Array de cervezas

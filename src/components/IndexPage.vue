@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>Bienvenido/a</h1>
+    <h3>Bienvenido/a</h3>
     <span>
-      Esto es una prueba de enrutamiento. Pulsa
+      Esto es una prueba de enrutamiento con vue-router. Pulsa
       <router-link to="/beers">aquí</router-link> para acceder al listado de
       cervezas.
     </span>

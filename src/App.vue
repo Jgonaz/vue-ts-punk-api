@@ -1,6 +1,14 @@
 <template>
   <div>
     <nav class="navbar">
+      <div class="navbar-logo">
+        <img
+          src="@/assets/images/beer_logo.png"
+          alt="beer_logo"
+          width="40"
+          height="40"
+        />
+      </div>
       <ul>
         <li>
           <router-link to="/index" class="navbar-brand">Inicio</router-link>
@@ -9,6 +17,13 @@
           <router-link to="/beers" class="nav-link">Listado</router-link>
         </li>
       </ul>
+      <div class="navbar-contact">
+        <a
+          href="https://www.linkedin.com/in/jgonzalez-azpillaga/"
+          target="_blank"
+          >Jorge González</a
+        >
+      </div>
     </nav>
     <div class="container">
       <router-view />
@@ -28,6 +43,4 @@ export default defineComponent({
 
 <style lang="scss">
 @import "@/styles/main";
-@import "@/styles/modal";
-@import "@/styles/variables";
 </style>
