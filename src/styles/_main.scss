@@ -96,9 +96,10 @@ body {
           &-header {
             display: grid;
             grid-template-columns:
-              minmax(auto, 20%) minmax(auto, 35%) minmax(auto, 15%)
-              minmax(auto, 15%) minmax(150px, 15%);
+              minmax(auto, 20%) minmax(auto, auto) minmax(auto, 12.5%)
+              minmax(auto, 12.5%) 125px;
             margin-bottom: 0.5rem;
+            padding: 0 0.5rem;
 
             span {
               text-align: center;
@@ -106,20 +107,28 @@ body {
               font-size: 14px;
             }
           }
+
           &-row {
             display: grid;
             grid-template-columns:
-              minmax(auto, 20%) minmax(auto, 35%) minmax(auto, 15%)
-              minmax(auto, 15%) minmax(150px, 15%);
+              minmax(auto, 20%) minmax(auto, auto) minmax(auto, 12.5%)
+              minmax(auto, 12.5%) 125px;
             background-color: white;
             margin-bottom: 1rem;
             box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 5%);
             align-items: center;
-            span {
+            padding: 0.5rem;
+
+            &:last-of-type {
+              margin-bottom: 0;
+            }
+
+            div {
               font-size: 14px;
-              margin: 0 0.5rem;
               text-align: center;
               color: #707070;
+              margin: 0.5rem;
+
               // Nombre
               &:first-child {
                 font-weight: 600;
@@ -127,38 +136,38 @@ body {
                 border-radius: 25px;
                 color: #565656;
                 padding: 0.5rem 1rem;
-                margin: 1rem;
               }
               // Ver detalles
               &:last-child {
-                display: flex;
-                background-color: $dark-blue;
-                border-radius: 25px;
-                color: white;
-                padding: 0.5rem 1rem 0.5rem 0.75rem;
-                margin: 1rem;
-                cursor: pointer;
-                min-width: 90px;
-                transition: 0.15s all;
-
-                i.eye-icon {
-                  width: 16px;
-                  height: 16px;
-                  margin-top: 1px;
-                  margin-right: 8px;
-                  background-color: white;
-                  -webkit-mask: url("@/assets/images/eye-icon.svg") no-repeat
-                    center;
-                  mask: url("@/assets/images/eye-icon.svg") no-repeat center;
+                span {
+                  display: flex;
+                  background-color: $dark-blue;
+                  border-radius: 25px;
+                  color: white;
+                  padding: 0.5rem 1rem 0.5rem 0.75rem;
+                  cursor: pointer;
+                  max-width: 110px;
                   transition: 0.15s all;
-                }
-
-                &:hover {
-                  color: $dark-blue;
-                  background-color: white;
 
                   i.eye-icon {
-                    background-color: $dark-blue;
+                    width: 16px;
+                    height: 16px;
+                    margin-top: 1px;
+                    margin-right: 8px;
+                    background-color: white;
+                    -webkit-mask: url("@/assets/images/eye-icon.svg") no-repeat
+                      center;
+                    mask: url("@/assets/images/eye-icon.svg") no-repeat center;
+                    transition: 0.15s all;
+                  }
+
+                  &:hover {
+                    color: $dark-blue;
+                    background-color: white;
+
+                    i.eye-icon {
+                      background-color: $dark-blue;
+                    }
                   }
                 }
               }
@@ -188,6 +197,8 @@ body {
               color: #707070;
               font-size: 14px;
               text-decoration: none;
+              padding: 1rem;
+
               &.hidden {
                 pointer-events: none;
                 opacity: 0;

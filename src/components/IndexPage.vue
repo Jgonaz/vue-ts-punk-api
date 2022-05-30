@@ -1,11 +1,22 @@
 <template>
   <div>
-    <h3>Bienvenido/a</h3>
-    <span>
-      Esto es una prueba de enrutamiento con vue-router. Pulsa
-      <router-link to="/beers">aquí</router-link> para acceder al listado de
-      cervezas.
-    </span>
+    <h3>¡Hola! 🙋‍♂️</h3>
+    <div>
+      <span>
+        Esto es un proyecto de prueba realizado sobre
+        <a href="https://punkapi.com/documentation/v2" target="_blank"
+          >Punk API</a
+        >
+        utilizando Vue3, TypeScript, Vue-Router y Axios.
+      </span>
+    </div>
+    <hr />
+    <div>
+      <span
+        >Pulse <router-link to="/beers">aquí</router-link> para acceder al
+        listado de cervezas.
+      </span>
+    </div>
   </div>
 </template>
 

@@ -22,20 +22,32 @@
         <span></span>
       </div>
       <!-- Resultados -->
-      <div
-        v-for="(beer, index) in beers"
-        v-bind:key="index"
-        class="list_grid-row"
-        :id="'beer_' + beer.id"
-      >
-        <span>{{ beer.name }}</span>
-        <span>{{ beer.tagline }}</span>
-        <span>{{ beer.first_brewed }}</span>
-        <span>{{ beer.abv }}%</span>
-        <span @click="beerDetails(beer.id)">
-          <i class="eye-icon" />
-          Ver detalles</span
+      <div>
+        <div
+          v-for="(beer, index) in beers"
+          v-bind:key="index"
+          class="list_grid-row"
+          :id="'beer_' + beer.id"
         >
+          <div>
+            <span>{{ beer.name }}</span>
+          </div>
+          <div>
+            <span>{{ beer.tagline }}</span>
+          </div>
+          <div>
+            <span>{{ beer.first_brewed }}</span>
+          </div>
+          <div>
+            <span>{{ beer.abv }}%</span>
+          </div>
+          <div>
+            <span @click="beerDetails(beer.id)">
+              <i class="eye-icon" />
+              Detalles
+            </span>
+          </div>
+        </div>
       </div>
       <div v-if="!beers.length" class="list_grid-no_results">
         <span>No hay más resultados con los criterios de búsqueda.</span>
@@ -51,7 +63,9 @@
         <span class="">{{ active_page }}</span>
         <a
           href="javascript:void(0)"
-          v-bind:class="{ hidden: beers.length === 0 || limit_reached }"
+          v-bind:class="{
+            hidden: beers.length === 0 || beers.length < per_page,
+          }"
           @click="goToPage(true)"
           >Página siguiente &gt;</a
         >
@@ -62,9 +76,9 @@
     </div>
 
     <VueModal v-model="showModal" :close="closeModal">
-      <div class="modal modal-details">
+      <div class="modal">
+        <span class="modal-close" title="Cerrar" @click="closeModal"></span>
         <BeerDetails v-if="itemSelected" :beer="itemSelected"></BeerDetails>
-        <button @click="closeModal">Cerrar</button>
       </div>
     </VueModal>
   </div>
@@ -90,7 +104,6 @@ export default defineComponent({
       showModal: false as boolean, // Mostrar/ocultar modal
       active_page: 1, // Página actual
       per_page: 5, // Número de registros por página (máximo 80)
-      limit_reached: false, // Si no hay más resultados, ocultamos el botón de "Página siguiente".
     };
   },
   methods: {
