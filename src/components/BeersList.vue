@@ -58,16 +58,16 @@
           href="javascript:void(0)"
           v-bind:class="{ hidden: active_page === 1 }"
           @click="goToPage(false)"
-          >&lt; Página anterior</a
+          >Página<br />anterior</a
         >
-        <span class="">{{ active_page }}</span>
+        <div>{{ active_page }}</div>
         <a
           href="javascript:void(0)"
           v-bind:class="{
             hidden: beers.length === 0 || beers.length < per_page,
           }"
           @click="goToPage(true)"
-          >Página siguiente &gt;</a
+          >Página<br />siguiente</a
         >
       </div>
     </div>
@@ -164,8 +164,8 @@ export default defineComponent({
     // Cuando ocurre algún error al intentar obtener los datos.
     handleError(error = "Error al intentar obtener los datos.") {
       console.error(error);
+      this.errMsg = error;
       this.beers = [];
-      this.errMsg = "Error al intentar obtener los datos.";
     },
   },
   mounted() {

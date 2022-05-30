@@ -21,7 +21,8 @@
         <a
           href="https://www.linkedin.com/in/jgonzalez-azpillaga/"
           target="_blank"
-          >Jorge González</a
+          ><ico class="navbar-contact_icon"></ico>
+          <span class="navbar-contact_name">Jorge González</span></a
         >
       </div>
     </nav>
